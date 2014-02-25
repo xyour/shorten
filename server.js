@@ -1,5 +1,6 @@
 
 var express = require('express');
+var cors = require('cors');
 
 var app = express();
 
@@ -14,6 +15,7 @@ var shortens = [
 ]
 
 app.use( express.urlencoded() );
+app.use( cors() );
 
 app.get('/', function(req, res){
 	res.send(shortens);
