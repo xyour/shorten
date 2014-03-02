@@ -56,12 +56,25 @@ app.get('/:url', function(req, res){
 //curl localhost:8000 -i -X POST -d 'a=b'
 app.post('/', function(req, res){
 	if(req.body.hasOwnProperty('url')){
-		var shorten = {
-			id: 'id' + idNum++, 
-			url: req.body['url'], 
-			count: 0
-		};
-		shortens.push(shorten);
+
+		var shorten = undefined;
+
+		for(var i = 0; i < shortens.length; i++){
+			if (shortens[i].url == req.body['url']){
+				shorten = shortens[i];
+				break;
+			}
+		}
+
+		if (shorten === undefined){
+			shorten = {
+				id: 'id' + idNum++, 
+				url: req.body['url'], 
+				count: 0
+			};
+			shortens.push(shorten);
+		}
+		
 		console.log('ok');
 		res.send(req.body);
 	}
