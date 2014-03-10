@@ -1,8 +1,13 @@
 
 var express = require('express');
+
 var cors = require('cors');
 
 var app = express();
+
+var server = require('http').createServer(app);
+
+var io = require('socket.io').listen(server);
 
 var idNum = 6;
 
@@ -91,6 +96,13 @@ app.post('/:url', function(req, res){
 })
 */
 
-app.listen(8000);
+//app.listen(8000);
+server.listen(8000);
 
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
